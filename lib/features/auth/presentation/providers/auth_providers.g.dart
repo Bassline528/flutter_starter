@@ -6,22 +6,7 @@ part of 'auth_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authStatusHash() => r'a97fb1bfae7ef0d717bc2f8e5ce04ad1277d6d61';
-
-/// See also [authStatus].
-@ProviderFor(authStatus)
-final authStatusProvider =
-    AutoDisposeProvider<ValueNotifier<AuthStatus>>.internal(
-  authStatus,
-  name: r'authStatusProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authStatusHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef AuthStatusRef = AutoDisposeProviderRef<ValueNotifier<AuthStatus>>;
-String _$authHash() => r'4b2d2d5709d10bc88a83e34eb6051c8bd16976d5';
+String _$authHash() => r'8c8b7edd2a5896eb0b67282d481426305c681527';
 
 /// See also [Auth].
 @ProviderFor(Auth)

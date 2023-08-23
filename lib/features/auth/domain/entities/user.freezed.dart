@@ -20,12 +20,13 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String? get socialId => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  String? get photo => throw _privateConstructorUsedError;
+  bool get isActive => throw _privateConstructorUsedError;
+  List<String> get roles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +39,13 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String email,
-      String? socialId,
+      String username,
       String firstName,
       String lastName,
-      String? photo});
+      bool isActive,
+      List<String> roles});
 }
 
 /// @nodoc
@@ -61,24 +63,25 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? socialId = freezed,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? photo = freezed,
+    Object? isActive = null,
+    Object? roles = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      socialId: freezed == socialId
-          ? _value.socialId
-          : socialId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -87,10 +90,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      photo: freezed == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      roles: null == roles
+          ? _value.roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -102,12 +109,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String email,
-      String? socialId,
+      String username,
       String firstName,
       String lastName,
-      String? photo});
+      bool isActive,
+      List<String> roles});
 }
 
 /// @nodoc
@@ -121,24 +129,25 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? socialId = freezed,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? photo = freezed,
+    Object? isActive = null,
+    Object? roles = null,
   }) {
     return _then(_$_User(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      socialId: freezed == socialId
-          ? _value.socialId
-          : socialId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -147,10 +156,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      photo: freezed == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      roles: null == roles
+          ? _value._roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -161,29 +174,38 @@ class _$_User implements _User {
   _$_User(
       {required this.id,
       required this.email,
-      this.socialId,
+      required this.username,
       required this.firstName,
       required this.lastName,
-      this.photo});
+      required this.isActive,
+      required final List<String> roles})
+      : _roles = roles;
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String email;
   @override
-  final String? socialId;
+  final String username;
   @override
   final String firstName;
   @override
   final String lastName;
   @override
-  final String? photo;
+  final bool isActive;
+  final List<String> _roles;
+  @override
+  List<String> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_roles);
+  }
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, socialId: $socialId, firstName: $firstName, lastName: $lastName, photo: $photo)';
+    return 'User(id: $id, email: $email, username: $username, firstName: $firstName, lastName: $lastName, isActive: $isActive, roles: $roles)';
   }
 
   @override
@@ -193,19 +215,21 @@ class _$_User implements _User {
             other is _$_User &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.socialId, socialId) ||
-                other.socialId == socialId) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            const DeepCollectionEquality().equals(other._roles, _roles));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, email, socialId, firstName, lastName, photo);
+  int get hashCode => Object.hash(runtimeType, id, email, username, firstName,
+      lastName, isActive, const DeepCollectionEquality().hash(_roles));
 
   @JsonKey(ignore: true)
   @override
@@ -223,27 +247,30 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {required final int id,
+      {required final String id,
       required final String email,
-      final String? socialId,
+      required final String username,
       required final String firstName,
       required final String lastName,
-      final String? photo}) = _$_User;
+      required final bool isActive,
+      required final List<String> roles}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get email;
   @override
-  String? get socialId;
+  String get username;
   @override
   String get firstName;
   @override
   String get lastName;
   @override
-  String? get photo;
+  bool get isActive;
+  @override
+  List<String> get roles;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

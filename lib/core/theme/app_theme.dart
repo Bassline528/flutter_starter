@@ -10,10 +10,16 @@ class AppTheme {
   final ThemeData _darkThemeData = ThemeData(
     useMaterial3: true,
     colorScheme: darkColorScheme,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: darkColorScheme.onBackground,
+    ),
   );
 
   final ThemeData _lighThemeData = ThemeData(
     useMaterial3: true,
     colorScheme: lightColorScheme,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: lightColorScheme.onBackground,
+    ),
   );
 }

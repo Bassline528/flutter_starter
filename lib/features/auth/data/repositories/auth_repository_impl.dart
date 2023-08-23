@@ -3,11 +3,10 @@ import 'package:flutter_starter/core/exceptions/auth_exception.dart';
 import 'package:flutter_starter/features/auth/data/datasources/auth_data_source.dart';
 import 'package:flutter_starter/features/auth/data/dtos/register_dto.dart';
 import 'package:flutter_starter/features/auth/data/mappers/login_response.dart';
-import 'package:flutter_starter/features/auth/domain/entities/token.dart';
 import 'package:flutter_starter/features/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: AuthRepository)
+@Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authDataSource);
 
@@ -15,10 +14,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<AuthException, LoginResponse>> login(
-    String email,
+    String username,
     String pass,
   ) {
-    return _authDataSource.login(email, pass);
+    return _authDataSource.login(username, pass);
   }
 
   @override
@@ -32,12 +31,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthException, Token>> refreshToken(String refreshToken) {
+  Future<Either<AuthException, Tokens>> refreshToken(String refreshToken) {
     return _authDataSource.refreshToken(refreshToken);
   }
 
   @override
-  Future<Either<AuthException, Unit>> register(RegisterDto registerDto) {
+  Future<Either<AuthException, LoginResponse>> register(
+    RegisterDto registerDto,
+  ) {
     return _authDataSource.register(registerDto);
   }
 }

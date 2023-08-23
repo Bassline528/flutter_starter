@@ -20,10 +20,8 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginResponse {
-  String get refreshToken => throw _privateConstructorUsedError;
-  String get token => throw _privateConstructorUsedError;
-  int get tokenExpires => throw _privateConstructorUsedError;
   UserResponse get user => throw _privateConstructorUsedError;
+  Tokens get tokens => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,10 +35,10 @@ abstract class $LoginResponseCopyWith<$Res> {
           LoginResponse value, $Res Function(LoginResponse) then) =
       _$LoginResponseCopyWithImpl<$Res, LoginResponse>;
   @useResult
-  $Res call(
-      {String refreshToken, String token, int tokenExpires, UserResponse user});
+  $Res call({UserResponse user, Tokens tokens});
 
   $UserResponseCopyWith<$Res> get user;
+  $TokensCopyWith<$Res> get tokens;
 }
 
 /// @nodoc
@@ -56,28 +54,18 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? refreshToken = null,
-    Object? token = null,
-    Object? tokenExpires = null,
     Object? user = null,
+    Object? tokens = null,
   }) {
     return _then(_value.copyWith(
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String,
-      tokenExpires: null == tokenExpires
-          ? _value.tokenExpires
-          : tokenExpires // ignore: cast_nullable_to_non_nullable
-              as int,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserResponse,
+      tokens: null == tokens
+          ? _value.tokens
+          : tokens // ignore: cast_nullable_to_non_nullable
+              as Tokens,
     ) as $Val);
   }
 
@@ -86,6 +74,14 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
   $UserResponseCopyWith<$Res> get user {
     return $UserResponseCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TokensCopyWith<$Res> get tokens {
+    return $TokensCopyWith<$Res>(_value.tokens, (value) {
+      return _then(_value.copyWith(tokens: value) as $Val);
     });
   }
 }
@@ -98,11 +94,12 @@ abstract class _$$_LoginResponseCopyWith<$Res>
       __$$_LoginResponseCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String refreshToken, String token, int tokenExpires, UserResponse user});
+  $Res call({UserResponse user, Tokens tokens});
 
   @override
   $UserResponseCopyWith<$Res> get user;
+  @override
+  $TokensCopyWith<$Res> get tokens;
 }
 
 /// @nodoc
@@ -116,28 +113,18 @@ class __$$_LoginResponseCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? refreshToken = null,
-    Object? token = null,
-    Object? tokenExpires = null,
     Object? user = null,
+    Object? tokens = null,
   }) {
     return _then(_$_LoginResponse(
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String,
-      tokenExpires: null == tokenExpires
-          ? _value.tokenExpires
-          : tokenExpires // ignore: cast_nullable_to_non_nullable
-              as int,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserResponse,
+      tokens: null == tokens
+          ? _value.tokens
+          : tokens // ignore: cast_nullable_to_non_nullable
+              as Tokens,
     ));
   }
 }
@@ -145,27 +132,19 @@ class __$$_LoginResponseCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LoginResponse implements _LoginResponse {
-  _$_LoginResponse(
-      {required this.refreshToken,
-      required this.token,
-      required this.tokenExpires,
-      required this.user});
+  _$_LoginResponse({required this.user, required this.tokens});
 
   factory _$_LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$$_LoginResponseFromJson(json);
 
   @override
-  final String refreshToken;
-  @override
-  final String token;
-  @override
-  final int tokenExpires;
-  @override
   final UserResponse user;
+  @override
+  final Tokens tokens;
 
   @override
   String toString() {
-    return 'LoginResponse(refreshToken: $refreshToken, token: $token, tokenExpires: $tokenExpires, user: $user)';
+    return 'LoginResponse(user: $user, tokens: $tokens)';
   }
 
   @override
@@ -173,18 +152,13 @@ class _$_LoginResponse implements _LoginResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoginResponse &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.tokenExpires, tokenExpires) ||
-                other.tokenExpires == tokenExpires) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.tokens, tokens) || other.tokens == tokens));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, refreshToken, token, tokenExpires, user);
+  int get hashCode => Object.hash(runtimeType, user, tokens);
 
   @JsonKey(ignore: true)
   @override
@@ -202,22 +176,16 @@ class _$_LoginResponse implements _LoginResponse {
 
 abstract class _LoginResponse implements LoginResponse {
   factory _LoginResponse(
-      {required final String refreshToken,
-      required final String token,
-      required final int tokenExpires,
-      required final UserResponse user}) = _$_LoginResponse;
+      {required final UserResponse user,
+      required final Tokens tokens}) = _$_LoginResponse;
 
   factory _LoginResponse.fromJson(Map<String, dynamic> json) =
       _$_LoginResponse.fromJson;
 
   @override
-  String get refreshToken;
-  @override
-  String get token;
-  @override
-  int get tokenExpires;
-  @override
   UserResponse get user;
+  @override
+  Tokens get tokens;
   @override
   @JsonKey(ignore: true)
   _$$_LoginResponseCopyWith<_$_LoginResponse> get copyWith =>
@@ -230,19 +198,13 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserResponse {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get provider => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  Role get role => throw _privateConstructorUsedError;
-  Role get status => throw _privateConstructorUsedError;
-  String get entity => throw _privateConstructorUsedError;
-  String? get socialId => throw _privateConstructorUsedError;
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
-  String? get photo => throw _privateConstructorUsedError;
+  bool get isActive => throw _privateConstructorUsedError;
+  List<String> get roles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -257,22 +219,13 @@ abstract class $UserResponseCopyWith<$Res> {
       _$UserResponseCopyWithImpl<$Res, UserResponse>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String email,
-      String provider,
+      String username,
       String firstName,
       String lastName,
-      DateTime createdAt,
-      DateTime updatedAt,
-      Role role,
-      Role status,
-      String entity,
-      String? socialId,
-      DateTime? deletedAt,
-      String? photo});
-
-  $RoleCopyWith<$Res> get role;
-  $RoleCopyWith<$Res> get status;
+      bool isActive,
+      List<String> roles});
 }
 
 /// @nodoc
@@ -290,30 +243,24 @@ class _$UserResponseCopyWithImpl<$Res, $Val extends UserResponse>
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? provider = null,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? role = null,
-    Object? status = null,
-    Object? entity = null,
-    Object? socialId = freezed,
-    Object? deletedAt = freezed,
-    Object? photo = freezed,
+    Object? isActive = null,
+    Object? roles = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      provider: null == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       firstName: null == firstName
           ? _value.firstName
@@ -323,55 +270,15 @@ class _$UserResponseCopyWithImpl<$Res, $Val extends UserResponse>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as Role,
-      entity: null == entity
-          ? _value.entity
-          : entity // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialId: freezed == socialId
-          ? _value.socialId
-          : socialId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      photo: freezed == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      roles: null == roles
+          ? _value.roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $RoleCopyWith<$Res> get role {
-    return $RoleCopyWith<$Res>(_value.role, (value) {
-      return _then(_value.copyWith(role: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $RoleCopyWith<$Res> get status {
-    return $RoleCopyWith<$Res>(_value.status, (value) {
-      return _then(_value.copyWith(status: value) as $Val);
-    });
   }
 }
 
@@ -384,24 +291,13 @@ abstract class _$$_UserResponseCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String email,
-      String provider,
+      String username,
       String firstName,
       String lastName,
-      DateTime createdAt,
-      DateTime updatedAt,
-      Role role,
-      Role status,
-      String entity,
-      String? socialId,
-      DateTime? deletedAt,
-      String? photo});
-
-  @override
-  $RoleCopyWith<$Res> get role;
-  @override
-  $RoleCopyWith<$Res> get status;
+      bool isActive,
+      List<String> roles});
 }
 
 /// @nodoc
@@ -417,30 +313,24 @@ class __$$_UserResponseCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? email = null,
-    Object? provider = null,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? role = null,
-    Object? status = null,
-    Object? entity = null,
-    Object? socialId = freezed,
-    Object? deletedAt = freezed,
-    Object? photo = freezed,
+    Object? isActive = null,
+    Object? roles = null,
   }) {
     return _then(_$_UserResponse(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      provider: null == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       firstName: null == firstName
           ? _value.firstName
@@ -450,38 +340,14 @@ class __$$_UserResponseCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as Role,
-      entity: null == entity
-          ? _value.entity
-          : entity // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialId: freezed == socialId
-          ? _value.socialId
-          : socialId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      photo: freezed == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      roles: null == roles
+          ? _value._roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -492,51 +358,39 @@ class _$_UserResponse implements _UserResponse {
   _$_UserResponse(
       {required this.id,
       required this.email,
-      required this.provider,
+      required this.username,
       required this.firstName,
       required this.lastName,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.role,
-      required this.status,
-      required this.entity,
-      this.socialId,
-      this.deletedAt,
-      this.photo});
+      required this.isActive,
+      required final List<String> roles})
+      : _roles = roles;
 
   factory _$_UserResponse.fromJson(Map<String, dynamic> json) =>
       _$$_UserResponseFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String email;
   @override
-  final String provider;
+  final String username;
   @override
   final String firstName;
   @override
   final String lastName;
   @override
-  final DateTime createdAt;
+  final bool isActive;
+  final List<String> _roles;
   @override
-  final DateTime updatedAt;
-  @override
-  final Role role;
-  @override
-  final Role status;
-  @override
-  final String entity;
-  @override
-  final String? socialId;
-  @override
-  final DateTime? deletedAt;
-  @override
-  final String? photo;
+  List<String> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_roles);
+  }
 
   @override
   String toString() {
-    return 'UserResponse(id: $id, email: $email, provider: $provider, firstName: $firstName, lastName: $lastName, createdAt: $createdAt, updatedAt: $updatedAt, role: $role, status: $status, entity: $entity, socialId: $socialId, deletedAt: $deletedAt, photo: $photo)';
+    return 'UserResponse(id: $id, email: $email, username: $username, firstName: $firstName, lastName: $lastName, isActive: $isActive, roles: $roles)';
   }
 
   @override
@@ -546,43 +400,21 @@ class _$_UserResponse implements _UserResponse {
             other is _$_UserResponse &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.entity, entity) || other.entity == entity) &&
-            (identical(other.socialId, socialId) ||
-                other.socialId == socialId) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            const DeepCollectionEquality().equals(other._roles, _roles));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      email,
-      provider,
-      firstName,
-      lastName,
-      createdAt,
-      updatedAt,
-      role,
-      status,
-      entity,
-      socialId,
-      deletedAt,
-      photo);
+  int get hashCode => Object.hash(runtimeType, id, email, username, firstName,
+      lastName, isActive, const DeepCollectionEquality().hash(_roles));
 
   @JsonKey(ignore: true)
   @override
@@ -600,82 +432,63 @@ class _$_UserResponse implements _UserResponse {
 
 abstract class _UserResponse implements UserResponse {
   factory _UserResponse(
-      {required final int id,
+      {required final String id,
       required final String email,
-      required final String provider,
+      required final String username,
       required final String firstName,
       required final String lastName,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      required final Role role,
-      required final Role status,
-      required final String entity,
-      final String? socialId,
-      final DateTime? deletedAt,
-      final String? photo}) = _$_UserResponse;
+      required final bool isActive,
+      required final List<String> roles}) = _$_UserResponse;
 
   factory _UserResponse.fromJson(Map<String, dynamic> json) =
       _$_UserResponse.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get email;
   @override
-  String get provider;
+  String get username;
   @override
   String get firstName;
   @override
   String get lastName;
   @override
-  DateTime get createdAt;
+  bool get isActive;
   @override
-  DateTime get updatedAt;
-  @override
-  Role get role;
-  @override
-  Role get status;
-  @override
-  String get entity;
-  @override
-  String? get socialId;
-  @override
-  DateTime? get deletedAt;
-  @override
-  String? get photo;
+  List<String> get roles;
   @override
   @JsonKey(ignore: true)
   _$$_UserResponseCopyWith<_$_UserResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Role _$RoleFromJson(Map<String, dynamic> json) {
-  return _Role.fromJson(json);
+Tokens _$TokensFromJson(Map<String, dynamic> json) {
+  return _Tokens.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Role {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get entity => throw _privateConstructorUsedError;
+mixin _$Tokens {
+  String get accessToken => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RoleCopyWith<Role> get copyWith => throw _privateConstructorUsedError;
+  $TokensCopyWith<Tokens> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RoleCopyWith<$Res> {
-  factory $RoleCopyWith(Role value, $Res Function(Role) then) =
-      _$RoleCopyWithImpl<$Res, Role>;
+abstract class $TokensCopyWith<$Res> {
+  factory $TokensCopyWith(Tokens value, $Res Function(Tokens) then) =
+      _$TokensCopyWithImpl<$Res, Tokens>;
   @useResult
-  $Res call({int id, String name, String entity});
+  $Res call({String accessToken, String refreshToken});
 }
 
 /// @nodoc
-class _$RoleCopyWithImpl<$Res, $Val extends Role>
-    implements $RoleCopyWith<$Res> {
-  _$RoleCopyWithImpl(this._value, this._then);
+class _$TokensCopyWithImpl<$Res, $Val extends Tokens>
+    implements $TokensCopyWith<$Res> {
+  _$TokensCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -685,61 +498,52 @@ class _$RoleCopyWithImpl<$Res, $Val extends Role>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? entity = null,
+    Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
               as String,
-      entity: null == entity
-          ? _value.entity
-          : entity // ignore: cast_nullable_to_non_nullable
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_RoleCopyWith<$Res> implements $RoleCopyWith<$Res> {
-  factory _$$_RoleCopyWith(_$_Role value, $Res Function(_$_Role) then) =
-      __$$_RoleCopyWithImpl<$Res>;
+abstract class _$$_TokensCopyWith<$Res> implements $TokensCopyWith<$Res> {
+  factory _$$_TokensCopyWith(_$_Tokens value, $Res Function(_$_Tokens) then) =
+      __$$_TokensCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String entity});
+  $Res call({String accessToken, String refreshToken});
 }
 
 /// @nodoc
-class __$$_RoleCopyWithImpl<$Res> extends _$RoleCopyWithImpl<$Res, _$_Role>
-    implements _$$_RoleCopyWith<$Res> {
-  __$$_RoleCopyWithImpl(_$_Role _value, $Res Function(_$_Role) _then)
+class __$$_TokensCopyWithImpl<$Res>
+    extends _$TokensCopyWithImpl<$Res, _$_Tokens>
+    implements _$$_TokensCopyWith<$Res> {
+  __$$_TokensCopyWithImpl(_$_Tokens _value, $Res Function(_$_Tokens) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? entity = null,
+    Object? accessToken = null,
+    Object? refreshToken = null,
   }) {
-    return _then(_$_Role(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+    return _then(_$_Tokens(
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
               as String,
-      entity: null == entity
-          ? _value.entity
-          : entity // ignore: cast_nullable_to_non_nullable
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -747,66 +551,64 @@ class __$$_RoleCopyWithImpl<$Res> extends _$RoleCopyWithImpl<$Res, _$_Role>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Role implements _Role {
-  _$_Role({required this.id, required this.name, required this.entity});
+class _$_Tokens implements _Tokens {
+  _$_Tokens({required this.accessToken, required this.refreshToken});
 
-  factory _$_Role.fromJson(Map<String, dynamic> json) => _$$_RoleFromJson(json);
+  factory _$_Tokens.fromJson(Map<String, dynamic> json) =>
+      _$$_TokensFromJson(json);
 
   @override
-  final int id;
+  final String accessToken;
   @override
-  final String name;
-  @override
-  final String entity;
+  final String refreshToken;
 
   @override
   String toString() {
-    return 'Role(id: $id, name: $name, entity: $entity)';
+    return 'Tokens(accessToken: $accessToken, refreshToken: $refreshToken)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Role &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.entity, entity) || other.entity == entity));
+            other is _$_Tokens &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, entity);
+  int get hashCode => Object.hash(runtimeType, accessToken, refreshToken);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RoleCopyWith<_$_Role> get copyWith =>
-      __$$_RoleCopyWithImpl<_$_Role>(this, _$identity);
+  _$$_TokensCopyWith<_$_Tokens> get copyWith =>
+      __$$_TokensCopyWithImpl<_$_Tokens>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RoleToJson(
+    return _$$_TokensToJson(
       this,
     );
   }
 }
 
-abstract class _Role implements Role {
-  factory _Role(
-      {required final int id,
-      required final String name,
-      required final String entity}) = _$_Role;
+abstract class _Tokens implements Tokens {
+  factory _Tokens(
+      {required final String accessToken,
+      required final String refreshToken}) = _$_Tokens;
 
-  factory _Role.fromJson(Map<String, dynamic> json) = _$_Role.fromJson;
+  factory _Tokens.fromJson(Map<String, dynamic> json) = _$_Tokens.fromJson;
 
   @override
-  int get id;
+  String get accessToken;
   @override
-  String get name;
-  @override
-  String get entity;
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
-  _$$_RoleCopyWith<_$_Role> get copyWith => throw _privateConstructorUsedError;
+  _$$_TokensCopyWith<_$_Tokens> get copyWith =>
+      throw _privateConstructorUsedError;
 }

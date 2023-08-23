@@ -1,5 +1,3 @@
-import 'package:flutter_starter/features/auth/presentation/providers/auth_providers.dart';
-import 'package:flutter_starter/features/auth/presentation/providers/providers.dart';
 import 'package:flutter_starter/features/auth/presentation/screens/screens.dart';
 import 'package:flutter_starter/features/home/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -9,9 +7,8 @@ part 'app_router.g.dart';
 
 @riverpod
 GoRouter appRouter(AppRouterRef ref) {
-  final auth = ref.watch(authProvider);
   return GoRouter(
-    initialLocation: '/spash',
+    initialLocation: '/splash',
     routes: [
       GoRoute(
         path: '/login',
@@ -27,31 +24,8 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/splash',
-        builder: (context, state) => CheckAuthStatusScreenScreen(),
+        builder: (context, state) => const CheckAuthStatusScreen(),
       ),
     ],
-    redirect: (context, GoRouterState state) {
-      final isGoingTo = state.path;
-      final authStatus = auth.status;
-
-      if (isGoingTo == '/splash' && authStatus == AuthStatus.checking) {
-        return null;
-      }
-
-      if (authStatus == AuthStatus.notAuthenticated) {
-        if (isGoingTo == '/login' || isGoingTo == '/register') return null;
-        return '/login';
-      }
-
-      if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/login' ||
-            isGoingTo == '/register' ||
-            isGoingTo == '/splash') {
-          return '/';
-        }
-      }
-
-      return null;
-    },
   );
 }

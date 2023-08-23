@@ -1,27 +1,27 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_starter/core/constants/api_constants.dart';
 import 'package:flutter_starter/core/exceptions/auth_exception.dart';
 import 'package:flutter_starter/core/services/services.dart';
 import 'package:flutter_starter/features/auth/data/dtos/dtos.dart';
 import 'package:flutter_starter/features/auth/data/mappers/login_response.dart';
-import 'package:flutter_starter/features/auth/domain/entities/entities.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 GetIt getIt = GetIt.instance;
 
 abstract class AuthDataSource {
-  Future<Either<AuthException, Unit>> register(
+  Future<Either<AuthException, LoginResponse>> register(
     RegisterDto registerDto,
   );
   Future<Either<AuthException, LoginResponse>> login(
-    String email,
+    String username,
     String pass,
   );
   Future<Either<AuthException, Unit>> logout(
     String idToken,
   );
-  Future<Either<AuthException, Token>> refreshToken(
+  Future<Either<AuthException, Tokens>> refreshToken(
     String refreshToken,
   );
   Future<Either<AuthException, UserResponse>> me(
@@ -29,23 +29,25 @@ abstract class AuthDataSource {
   );
 }
 
-@LazySingleton(as: AuthDataSource)
+@Injectable(as: AuthDataSource)
 class AuthService implements AuthDataSource {
-  AuthService();
+  AuthService(
+    this.dioClient,
+  );
 
-  final dioClient = getIt.get<DioClient>();
+  final DioClient dioClient;
 
   @override
-  Future<Either<AuthException, Unit>> register(
+  Future<Either<AuthException, LoginResponse>> register(
     RegisterDto registerDto,
   ) async {
     try {
-      final data = await dioClient.dio.post<void>(
-        '/auth/email/register',
+      final data = await dioClient.dio.post<Map<String, dynamic>>(
+        registerEndpoint,
         data: registerDto.toJson(),
       );
       return switch (data.statusCode) {
-        204 => const Right(unit),
+        204 => Right(LoginResponse.fromJson(data.data!)),
         422 => const Left(AuthException.emailAlreadyExists()),
         _ => const Left(AuthException.unknown()),
       };
@@ -56,24 +58,27 @@ class AuthService implements AuthDataSource {
 
   @override
   Future<Either<AuthException, LoginResponse>> login(
-    String email,
+    String username,
     String pass,
   ) async {
     try {
       final data = await dioClient.dio.post<Map<String, dynamic>>(
-        '/auth/email/register',
+        loginEndpoint,
         data: {
-          'email': email,
+          'username': username,
           'password': pass,
         },
       );
       return switch (data.statusCode) {
-        204 => Right(LoginResponse.fromJson(data.data!)),
+        200 => Right(LoginResponse.fromJson(data.data!)),
         422 => const Left(AuthException.wrongEmailOrPass()),
         _ => const Left(AuthException.unknown()),
       };
-    } on DioException catch (_) {
-      return const Left(AuthException.serverError());
+    } on DioException catch (error) {
+      return switch (error.response?.statusCode) {
+        401 => const Left(AuthException.wrongEmailOrPass()),
+        _ => const Left(AuthException.unknown()),
+      };
     }
   }
 
@@ -83,7 +88,7 @@ class AuthService implements AuthDataSource {
   ) async {
     try {
       final data = await dioClient.dio.post<void>(
-        '/auth/logout',
+        logoutEndpoint,
         options: Options(
           headers: {
             'Authorization': 'Bearer $idToken',
@@ -100,10 +105,11 @@ class AuthService implements AuthDataSource {
   }
 
   @override
-  Future<Either<AuthException, Token>> refreshToken(String refreshToken) async {
+  Future<Either<AuthException, Tokens>> refreshToken(
+      String refreshToken) async {
     try {
       final data = await dioClient.dio.post<Map<String, dynamic>>(
-        '/auth/refresh',
+        refreshEndpoint,
         options: Options(
           headers: {
             'Authorization': 'Bearer $refreshToken',
@@ -111,7 +117,7 @@ class AuthService implements AuthDataSource {
         ),
       );
       return switch (data.statusCode) {
-        200 => Right(Token.fromJson(data.data!)),
+        200 => Right(Tokens.fromJson(data.data!)),
         401 => const Left(AuthException.unauthorized()),
         _ => const Left(AuthException.unknown()),
       };
@@ -123,8 +129,8 @@ class AuthService implements AuthDataSource {
   @override
   Future<Either<AuthException, UserResponse>> me(String idToken) async {
     try {
-      final data = await dioClient.dio.post<Map<String, dynamic>>(
-        '/auth/me',
+      final data = await dioClient.dio.get<Map<String, dynamic>>(
+        meEndpoint,
         options: Options(
           headers: {
             'Authorization': 'Bearer $idToken',

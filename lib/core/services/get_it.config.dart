@@ -12,11 +12,17 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../../features/auth/data/datasources/auth_data_source.dart' as _i4;
-import '../../features/auth/data/repositories/auth_repository_impl.dart' as _i6;
-import '../../features/auth/domain/repositories/auth_repository.dart' as _i5;
+import '../../features/auth/data/datasources/auth_data_source.dart' as _i7;
+import '../../features/auth/data/repositories/auth_repository_impl.dart'
+    as _i10;
+import '../../features/auth/domain/repositories/auth_repository.dart' as _i9;
+import '../../features/shared/domain/services/key_value_storage_service.dart'
+    as _i5;
+import '../../features/shared/domain/services/key_value_storage_service_impl.dart'
+    as _i6;
 import '../theme/app_theme.dart' as _i3;
-import 'http_client.dart' as _i7;
+import 'http_client.dart' as _i4;
+import 'services.dart' as _i8;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -30,10 +36,12 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     gh.singleton<_i3.AppTheme>(_i3.AppTheme());
-    gh.lazySingleton<_i4.AuthDataSource>(() => _i4.AuthService());
-    gh.lazySingleton<_i5.AuthRepository>(
-        () => _i6.AuthRepositoryImpl(gh<_i4.AuthDataSource>()));
-    gh.singleton<_i7.DioClient>(_i7.DioClient());
+    gh.factory<_i4.DioClient>(() => _i4.DioClient());
+    gh.lazySingleton<_i5.KeyValueStorageService>(
+        () => _i6.KeyValueStorageServiceImpl());
+    gh.factory<_i7.AuthDataSource>(() => _i7.AuthService(gh<_i8.DioClient>()));
+    gh.factory<_i9.AuthRepository>(
+        () => _i10.AuthRepositoryImpl(gh<_i7.AuthDataSource>()));
     return this;
   }
 }

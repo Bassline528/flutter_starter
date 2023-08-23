@@ -5,17 +5,17 @@ import 'package:flutter_starter/features/auth/data/mappers/login_response.dart';
 import 'package:flutter_starter/features/auth/domain/entities/entities.dart';
 
 abstract class AuthRepository {
-  Future<Either<AuthException, Unit>> register(
+  Future<Either<AuthException, LoginResponse>> register(
     RegisterDto registerDto,
   );
   Future<Either<AuthException, LoginResponse>> login(
-    String email,
+    String username,
     String pass,
   );
   Future<Either<AuthException, Unit>> logout(
     String idToken,
   );
-  Future<Either<AuthException, Token>> refreshToken(
+  Future<Either<AuthException, Tokens>> refreshToken(
     String refreshToken,
   );
   Future<Either<AuthException, UserResponse>> me(

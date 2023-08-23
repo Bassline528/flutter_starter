@@ -19,7 +19,7 @@ extension AuthExceptionX on AuthException {
     } else if (this is _InternetConnectionUnavailable) {
       return 'Sorry, there’s a problem with your internet connection. Please check your connection and try again.';
     } else if (this is _WrongEmailOrPass) {
-      return 'An email or password are incorrect';
+      return 'Email or password is incorrect';
     } else if (this is _EmailAlreadyExists) {
       return 'This email already exists';
     } else {
