@@ -1,14 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_starter/core/services/get_it.dart';
-import 'package:flutter_starter/features/auth/data/datasources/auth_data_source.dart';
 import 'package:flutter_starter/features/auth/data/mappers/login_response.dart';
-import 'package:flutter_starter/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:flutter_starter/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter_starter/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fresh_dio/fresh_dio.dart';
 import 'package:injectable/injectable.dart';
 
-final baseUrl = 'http://localhost:3000/api/v1';
+const baseUrl = 'http://localhost:3000/api/v1';
 
 @Injectable()
 class DioClient {

@@ -11,7 +11,7 @@ class Screen2Screen extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('${auth.user?.firstName} ${auth.user?.lastName}' ?? ''),
+          Text('${auth.user?.firstName} ${auth.user?.lastName}'),
           ElevatedButton(
             onPressed: () {
               ref.read(authProvider.notifier).logout();
