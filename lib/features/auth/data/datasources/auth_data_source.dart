@@ -46,13 +46,12 @@ class AuthService implements AuthDataSource {
         registerEndpoint,
         data: registerDto.toJson(),
       );
-      return switch (data.statusCode) {
-        204 => Right(LoginResponse.fromJson(data.data!)),
+      return Right(LoginResponse.fromJson(data.data!));
+    } on DioException catch (error) {
+      return switch (error.response?.statusCode) {
         422 => const Left(AuthException.emailAlreadyExists()),
         _ => const Left(AuthException.unknown()),
       };
-    } on DioException catch (_) {
-      return const Left(AuthException.serverError());
     }
   }
 
@@ -69,14 +68,11 @@ class AuthService implements AuthDataSource {
           'password': pass,
         },
       );
-      return switch (data.statusCode) {
-        200 => Right(LoginResponse.fromJson(data.data!)),
-        422 => const Left(AuthException.wrongEmailOrPass()),
-        _ => const Left(AuthException.unknown()),
-      };
+      return Right(LoginResponse.fromJson(data.data!));
     } on DioException catch (error) {
       return switch (error.response?.statusCode) {
         401 => const Left(AuthException.wrongEmailOrPass()),
+        422 => const Left(AuthException.wrongEmailOrPass()),
         _ => const Left(AuthException.unknown()),
       };
     }
@@ -87,7 +83,7 @@ class AuthService implements AuthDataSource {
     String idToken,
   ) async {
     try {
-      final data = await dioClient.dio.post<void>(
+      await dioClient.dio.post<void>(
         logoutEndpoint,
         options: Options(
           headers: {
@@ -95,18 +91,20 @@ class AuthService implements AuthDataSource {
           },
         ),
       );
-      return switch (data.statusCode) {
-        204 => right(unit),
+      return const Right(unit);
+    } on DioException catch (error) {
+      return switch (error.response?.statusCode) {
+        401 => const Left(AuthException.unauthorized()),
+        500 => const Left(AuthException.serverError()),
         _ => const Left(AuthException.unknown()),
       };
-    } on DioException catch (_) {
-      return const Left(AuthException.serverError());
     }
   }
 
   @override
   Future<Either<AuthException, Tokens>> refreshToken(
-      String refreshToken) async {
+    String refreshToken,
+  ) async {
     try {
       final data = await dioClient.dio.post<Map<String, dynamic>>(
         refreshEndpoint,
@@ -116,13 +114,13 @@ class AuthService implements AuthDataSource {
           },
         ),
       );
-      return switch (data.statusCode) {
-        200 => Right(Tokens.fromJson(data.data!)),
+      return Right(Tokens.fromJson(data.data!));
+    } on DioException catch (error) {
+      return switch (error.response?.statusCode) {
         401 => const Left(AuthException.unauthorized()),
+        500 => const Left(AuthException.serverError()),
         _ => const Left(AuthException.unknown()),
       };
-    } on DioException catch (_) {
-      return const Left(AuthException.serverError());
     }
   }
 
@@ -137,13 +135,13 @@ class AuthService implements AuthDataSource {
           },
         ),
       );
-      return switch (data.statusCode) {
-        200 => Right(UserResponse.fromJson(data.data!)),
+      return Right(UserResponse.fromJson(data.data!));
+    } on DioException catch (error) {
+      return switch (error.response?.statusCode) {
         401 => const Left(AuthException.unauthorized()),
+        500 => const Left(AuthException.serverError()),
         _ => const Left(AuthException.unknown()),
       };
-    } on DioException catch (_) {
-      return const Left(AuthException.serverError());
     }
   }
 }
