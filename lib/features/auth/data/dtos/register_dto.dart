@@ -8,6 +8,7 @@ part 'register_dto.g.dart';
 class RegisterDto with _$RegisterDto {
   factory RegisterDto({
     required String email,
+    required String username,
     required String firstName,
     required String lastName,
     required String password,

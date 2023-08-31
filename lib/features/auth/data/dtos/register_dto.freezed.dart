@@ -21,6 +21,7 @@ RegisterDto _$RegisterDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RegisterDto {
   String get email => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
@@ -37,7 +38,12 @@ abstract class $RegisterDtoCopyWith<$Res> {
           RegisterDto value, $Res Function(RegisterDto) then) =
       _$RegisterDtoCopyWithImpl<$Res, RegisterDto>;
   @useResult
-  $Res call({String email, String firstName, String lastName, String password});
+  $Res call(
+      {String email,
+      String username,
+      String firstName,
+      String lastName,
+      String password});
 }
 
 /// @nodoc
@@ -54,6 +60,7 @@ class _$RegisterDtoCopyWithImpl<$Res, $Val extends RegisterDto>
   @override
   $Res call({
     Object? email = null,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? password = null,
@@ -62,6 +69,10 @@ class _$RegisterDtoCopyWithImpl<$Res, $Val extends RegisterDto>
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       firstName: null == firstName
           ? _value.firstName
@@ -87,7 +98,12 @@ abstract class _$$_RegisterDtoCopyWith<$Res>
       __$$_RegisterDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String firstName, String lastName, String password});
+  $Res call(
+      {String email,
+      String username,
+      String firstName,
+      String lastName,
+      String password});
 }
 
 /// @nodoc
@@ -102,6 +118,7 @@ class __$$_RegisterDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? email = null,
+    Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? password = null,
@@ -110,6 +127,10 @@ class __$$_RegisterDtoCopyWithImpl<$Res>
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       firstName: null == firstName
           ? _value.firstName
@@ -132,6 +153,7 @@ class __$$_RegisterDtoCopyWithImpl<$Res>
 class _$_RegisterDto implements _RegisterDto {
   _$_RegisterDto(
       {required this.email,
+      required this.username,
       required this.firstName,
       required this.lastName,
       required this.password});
@@ -142,6 +164,8 @@ class _$_RegisterDto implements _RegisterDto {
   @override
   final String email;
   @override
+  final String username;
+  @override
   final String firstName;
   @override
   final String lastName;
@@ -150,7 +174,7 @@ class _$_RegisterDto implements _RegisterDto {
 
   @override
   String toString() {
-    return 'RegisterDto(email: $email, firstName: $firstName, lastName: $lastName, password: $password)';
+    return 'RegisterDto(email: $email, username: $username, firstName: $firstName, lastName: $lastName, password: $password)';
   }
 
   @override
@@ -159,6 +183,8 @@ class _$_RegisterDto implements _RegisterDto {
         (other.runtimeType == runtimeType &&
             other is _$_RegisterDto &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -170,7 +196,7 @@ class _$_RegisterDto implements _RegisterDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, firstName, lastName, password);
+      Object.hash(runtimeType, email, username, firstName, lastName, password);
 
   @JsonKey(ignore: true)
   @override
@@ -189,6 +215,7 @@ class _$_RegisterDto implements _RegisterDto {
 abstract class _RegisterDto implements RegisterDto {
   factory _RegisterDto(
       {required final String email,
+      required final String username,
       required final String firstName,
       required final String lastName,
       required final String password}) = _$_RegisterDto;
@@ -198,6 +225,8 @@ abstract class _RegisterDto implements RegisterDto {
 
   @override
   String get email;
+  @override
+  String get username;
   @override
   String get firstName;
   @override

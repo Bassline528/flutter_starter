@@ -47,9 +47,12 @@ class Auth extends _$Auth {
   Future<void> registerUser(RegisterDto registerData) async {
     state = state.copyWith(status: AuthStatus.checking, errorMessage: '');
     final user = await _authRepository.register(registerData);
-    await user.fold(
+    user.fold(
       (l) {
-        //emit error message
+        state = state.copyWith(
+          status: AuthStatus.notAuthenticated,
+          errorMessage: l.description,
+        );
       },
       (r) {
         _setTokens(r.tokens);
